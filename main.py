@@ -23,14 +23,20 @@ def ping():
 def create_twit():
     '''{"body":"Hello World", "author": "@TimDzen"}'''
     twit_json = request.get_json()
-    twit = Twit(twit_json['body'], twit_json['author'], twit_json['id'])
+    twit = Twit(twit_json['body'], 
+                twit_json['author'],
+                twit_json['id']
+               )
     twits.append(twit)
     return jsonify({'status': 'success'})
 
 
 @app.route('/twit', methods=["GET"])
 def read_twits():
-        return jsonify({'twits': [{'id': twit.id, 'body': twit.body, 'author': twit.author} for twit in twits]})
+        return jsonify({'twits': [{'id': twit.id,
+                                   'body': twit.body,
+                                   'author': twit.author} for twit in twits]}
+                      )
 
 @app.route('/twit/<int:twit_id>', methods=["DELETE"])
 def delete_twit(twit_id):
@@ -50,9 +56,12 @@ def update_twit(twit_id):
         if twit.id == twit_id:
             twit.body = twit_json.get('body', twit.body)
             twit.author = twit_json.get('author', twit.author)
-            return jsonify({'status': 'success', 'message': 'Twit updated successfully'})
+            return jsonify({'status': 'success',
+                            'message': 'Twit updated successfully'}
+                          )
 
-    return jsonify({'status': 'error', 'message': 'Twit not found'}), 404
+    return jsonify({'status': 'error',
+                    'message': 'Twit not found'}), 404
 
 if __name__ == '__main__':
     app.run(debug=True)
