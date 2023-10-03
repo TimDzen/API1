@@ -63,5 +63,20 @@ def update_twit(twit_id):
     return jsonify({'status': 'error',
                     'message': 'Twit not found'}), 404
 
+@app.route('/user', methods=['POST'])
+def create_user():
+    data = request.json
+
+    users.append(data)
+
+    return jsonify({'message': 'Пользователь создан'}), 201
+
+@app.route('/users', methods=['GET'])
+def get_users():
+    return jsonify({'users': users})
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
