@@ -63,6 +63,9 @@ def update_twit(twit_id):
     return jsonify({'status': 'error',
                     'message': 'Twit not found'}), 404
 
+users = []
+posts = []
+
 @app.route('/user', methods=['POST'])
 def create_user():
     data = request.json
